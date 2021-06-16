@@ -8,6 +8,16 @@ function active () {
 	}
 }
 
+function setActiveImage (index) {
+	images.item(index).classList.add("slider__item_active");
+	points.item(index).classList.add("slider__dot_active");
+}
+
+function hideImage (index) {
+	images.item(index).classList.remove("slider__item_active");
+	points.item(index).classList.remove("slider__dot_active");
+}
+
 const right = document.querySelector("div div.slider__arrow_next");
 const left = document.querySelector("div div.slider__arrow_prev");
 
@@ -15,37 +25,29 @@ const points = document.getElementsByClassName("slider__dot");
 
 right.onclick = function () {
 	let index = active();
-	images.item(index).classList.remove("slider__item_active");
-	points.item(index).classList.remove("slider__dot_active");
+	hideImage(index);
 	if (index === (images.length - 1)) {
-		images.item(0).classList.add("slider__item_active");
-		points.item(0).classList.add("slider__dot_active");
+		setActiveImage(0);
 	} else {
-		images.item(index + 1).classList.add("slider__item_active");
-		points.item(index + 1).classList.add("slider__dot_active");
+		setActiveImage(index + 1);
 	}
 }
 
 left.onclick = function () {
 	let index = active();
-	images.item(index).classList.remove("slider__item_active");
-	points.item(index).classList.remove("slider__dot_active");
+	hideImage(index);
 	if (index === 0) {
-		images.item(images.length - 1).classList.add("slider__item_active");
-		points.item(images.length - 1).classList.add("slider__dot_active");
+		setActiveImage(images.length - 1);
 	} else {
-		images.item(index - 1).classList.add("slider__item_active");
-		points.item(index - 1).classList.add("slider__dot_active");
+		setActiveImage(index - 1);
 	}
 }
 
 for (let i = 0; i < points.length; i++) {
 	points.item(i).onclick = function () {
 		for (let i = 0; i < points.length; i++) {
-			points.item(i).classList.remove("slider__dot_active");
-			images.item(i).classList.remove("slider__item_active");
+			hideImage(i);
 		}
-		points.item(i).classList.add("slider__dot_active");
-		images.item(i).classList.add("slider__item_active");
+		setActiveImage(i);
 	}
 }
